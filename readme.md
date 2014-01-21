@@ -16,8 +16,6 @@ the following packages are required.
 	* can download from http://logback.qos.ch/download.html
 * slf4j-api.jar: should ver. > 1.6.3. The logging interface package.
 	* can download from http://www.slf4j.org/download.html
-* protobuf-java.jar: should ver. > 2.5.0. The jar library to handle protocol buffers.
-	* can download the total package from https://code.google.com/p/protobuf/
 * guava.jar: should ver. > 16.0. The guava jar library.
 	* can download the total package from https://code.google.com/p/guava-libraries/
 
