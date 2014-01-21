@@ -18,8 +18,10 @@ the following packages are required.
 	* can download from http://www.slf4j.org/download.html
 * protobuf-java.jar: should ver. > 2.5.0. The jar library to handle protocol buffers.
 	* can download the total package from https://code.google.com/p/protobuf/
+* guava.jar: should ver. > 16.0. The guava jar library.
+	* can download the total package from https://code.google.com/p/guava-libraries/
 
-Please download them from the above urls.
+Please download them from the above urls and place in lib directroy in the project.
 
 Then open the project with eclipse, and execute each app class corresponding to each package in guava.
 
