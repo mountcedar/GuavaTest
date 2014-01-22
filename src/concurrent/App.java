@@ -23,13 +23,13 @@ public class App {
 			e1.printStackTrace();
 		}
 		
-		logger.debug("Current Thread: {}", Thread.currentThread().getName());
+		logger.debug("in main");
 		ListeningExecutorService pool = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 		for (final URL siteUrl : topSites) {
 		    final ListenableFuture<String> future = pool.submit(new Callable<String>() {
 		        @Override
 		        public String call() throws Exception {
-		        	logger.debug("[{}] {}", System.currentTimeMillis(), Thread.currentThread().getName());
+		        	logger.debug("in call()");
 		        	Thread.sleep(100);
 		        	return siteUrl.toString();
 		        }
@@ -40,49 +40,30 @@ public class App {
 		        public void run() {
 		            try {
 		                final String contents = future.get();
-		                logger.debug("[{}] 1: {}: {}", 
-		                		new Object[] {System.currentTimeMillis(), Thread.currentThread().getName(), contents});
+		                logger.debug("listener[1]: {}", contents);
 		                Thread.sleep(100);
 		            } catch (InterruptedException e) {
 		            } catch (ExecutionException e) {
 		            } finally {
-		            	logger.debug("[{}] job completed.", System.currentTimeMillis());
+		            	logger.debug("job completed.");
 		            }
 		        }
-		    }, pool);
+		    }, MoreExecutors.sameThreadExecutor());
 
 		    future.addListener(new Runnable() {
 		        @Override
 		        public void run() {
 		            try {
 		                final String contents = future.get();
-		                logger.debug("[{}] 2: {}: {}", 
-		                		new Object [] {System.currentTimeMillis(), Thread.currentThread().getName(), contents});
+		                logger.debug("listener[2]: {}", contents);
 		                Thread.sleep(100);
 		            } catch (InterruptedException e) {
 		            } catch (ExecutionException e) {
 		            } finally {
-		            	logger.debug("[{}] job completed.", System.currentTimeMillis());
+		            	logger.debug("job completed.");
 		            }
 		        }
-		    }, pool);
-
-		    future.addListener(new Runnable() {
-		        @Override
-		        public void run() {
-		            try {
-		                final String contents = future.get();
-		                logger.debug("[{}] 3: {}: {}", 
-		                		new Object[] {System.currentTimeMillis(), Thread.currentThread().getName(), contents});
-		                Thread.sleep(100);
-		            } catch (InterruptedException e) {
-		            } catch (ExecutionException e) {
-		            } finally {
-		            	logger.debug("[{}] job completed.", System.currentTimeMillis());
-		            } 
-		        }
-		    }, pool);
-
+		    }, MoreExecutors.sameThreadExecutor());
 		}
 		try {
 			Thread.sleep(300);
